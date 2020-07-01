@@ -69,4 +69,15 @@ class CategoryTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
         $this->assertSame('Red', $updated_category->name);
     }
+
+    /**
+     * @test
+     */
+    public function user_can_delete_category()
+    {
+        $category = factory(Category::class)->create();
+        $response = $this->json('DELETE', route('category.delete', [$category->id]));
+
+        $response->assertStatus(Response::HTTP_OK);
+    }
 }

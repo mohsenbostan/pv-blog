@@ -41,4 +41,15 @@ class CategoryController extends Controller
             'message' => 'category updated successfully'
         ], Response::HTTP_OK);
     }
+
+    public function destroy($ids)
+    {
+        resolve(CategoryRepository::class)->delete($ids);
+
+        return \response()->json([
+            'message' => 'category(ies) deleted successfully'
+        ], Response::HTTP_OK);
+    }
+
+
 }

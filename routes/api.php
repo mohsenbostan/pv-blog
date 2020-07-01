@@ -25,6 +25,7 @@ Route::prefix('/categories')->group(function () {
     Route::get('/', 'API\CategoryController@index')->name('category.all');
     Route::post('/', 'API\CategoryController@store')->name('category.store');
     Route::put('/', 'API\CategoryController@update')->name('category.update');
+    Route::delete('/{ids}', 'API\CategoryController@destroy')->name('category.delete');
 });
 
 Route::prefix('/articles')->group(function () {

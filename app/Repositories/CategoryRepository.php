@@ -17,8 +17,7 @@ class CategoryRepository
      */
     public function all()
     {
-        $categories = Category::with('articles')->orderByDesc('created_at')->get();
-        return $categories;
+        return Category::with('articles')->orderByDesc('created_at')->get();
     }
 
     /**
@@ -40,5 +39,13 @@ class CategoryRepository
         Category::find($id)->update([
             'name' => $name
         ]);
+    }
+
+    /**
+     * @param $ids
+     */
+    public function delete($ids): void
+    {
+        Category::destroy($ids);
     }
 }

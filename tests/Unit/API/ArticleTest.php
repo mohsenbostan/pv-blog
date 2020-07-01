@@ -4,7 +4,9 @@ namespace Tests\Unit\API;
 
 use App\Article;
 use App\Category;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
@@ -38,6 +40,8 @@ class ArticleTest extends TestCase
      */
     public function create_article_should_be_validated()
     {
+        Sanctum::actingAs(factory(User::class)->create());
+
         $response = $this->postJson(route('article.store'), []);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -48,6 +52,7 @@ class ArticleTest extends TestCase
      */
     public function user_can_create_new_article()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         $category = factory(Category::class)->create();
 
         $response = $this->postJson(route('article.store'), [
@@ -65,6 +70,7 @@ class ArticleTest extends TestCase
      */
     public function update_article_should_be_validated()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         $response = $this->json('PUT', route('article.update'), []);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -75,6 +81,7 @@ class ArticleTest extends TestCase
      */
     public function user_can_update_an_article()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         $article = factory(Article::class)->create([
             'title' => 'My Title'
         ]);
@@ -97,6 +104,7 @@ class ArticleTest extends TestCase
      */
     public function user_can_delete_article()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         $article = factory(Article::class)->create();
         $response = $this->json('DELETE', route('article.delete', [$article->id]));
         $response->assertStatus(Response::HTTP_OK);

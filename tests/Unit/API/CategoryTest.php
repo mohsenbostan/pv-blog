@@ -3,7 +3,9 @@
 namespace Tests\Unit\API;
 
 use App\Category;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
@@ -26,6 +28,7 @@ class CategoryTest extends TestCase
      */
     public function create_category_should_be_validated()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         $response = $this->postJson(route('category.store'), []);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -36,6 +39,7 @@ class CategoryTest extends TestCase
      */
     public function user_can_create_category()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         $response = $this->postJson(route('category.store'), [
             'name' => 'Red'
         ]);
@@ -48,6 +52,7 @@ class CategoryTest extends TestCase
      */
     public function update_category_should_be_validated()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         $response = $this->postJson(route('category.update'), []);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -58,6 +63,7 @@ class CategoryTest extends TestCase
      */
     public function user_can_update_category()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         $category = factory(Category::class)->create([
             'name' => 'Blue'
         ]);
@@ -75,6 +81,7 @@ class CategoryTest extends TestCase
      */
     public function user_can_delete_category()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         $category = factory(Category::class)->create();
         $response = $this->json('DELETE', route('category.delete', [$category->id]));
 

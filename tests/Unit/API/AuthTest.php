@@ -4,6 +4,7 @@ namespace Tests\Unit\API;
 
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
@@ -50,17 +51,16 @@ class AuthTest extends TestCase
 
     public function test_logged_in_user_can_logout()
     {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user)->json('POST', route('auth.logout'), []);
+        Sanctum::actingAs(factory(User::class)->create());
+        $response = $this->json('POST', route('auth.logout'), []);
 
         $response->assertStatus(Response::HTTP_OK);
     }
 
     public function test_logged_in_user_can_see_details()
     {
+        Sanctum::actingAs(factory(User::class)->create());
         $user = factory(User::class)->create();
-
         $response = $this->actingAs($user)->get(route('auth.user'));
 
         $data = json_decode($response->getContent(), true);

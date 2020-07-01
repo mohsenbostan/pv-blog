@@ -20,3 +20,9 @@ Route::prefix('/auth')->group(function () {
     Route::post('/logout', 'API\AuthController@logout')->name('auth.logout');
     Route::get('/user', 'API\AuthController@user')->name('auth.user');
 });
+
+Route::prefix('/categories')->group(function () {
+    Route::get('/', 'API\CategoryController@index')->name('category.all');
+    Route::post('/', 'API\CategoryController@store')->name('category.store');
+    Route::put('/', 'API\CategoryController@update')->name('category.update');
+});

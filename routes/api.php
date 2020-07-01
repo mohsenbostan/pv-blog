@@ -26,3 +26,11 @@ Route::prefix('/categories')->group(function () {
     Route::post('/', 'API\CategoryController@store')->name('category.store');
     Route::put('/', 'API\CategoryController@update')->name('category.update');
 });
+
+Route::prefix('/articles')->group(function () {
+    Route::get('/', 'API\ArticleController@index')->name('article.all');
+    Route::get('/{article_id}/show', 'API\ArticleController@show')->name('article.show');
+    Route::post('/', 'API\ArticleController@store')->name('article.store');
+    Route::put('/', 'API\ArticleController@update')->name('article.update');
+    Route::delete('/{ids}', 'API\ArticleController@destroy')->name('article.delete');
+});

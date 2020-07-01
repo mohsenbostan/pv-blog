@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -11,7 +12,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::with('articles')->orderByDesc('created_at')->get();
+        $categories = resolve(CategoryRepository::class)->all();
         return response()->json($categories, Response::HTTP_OK);
     }
 
@@ -21,9 +22,7 @@ class CategoryController extends Controller
             'name' => 'required|unique:categories'
         ]);
 
-        Category::create([
-            'name' => $request->name
-        ]);
+        resolve(CategoryRepository::class)->create($request->name);
 
         return \response()->json([
             'message' => 'category created successfully'
@@ -36,9 +35,7 @@ class CategoryController extends Controller
             'name' => 'required|unique:categories'
         ]);
 
-        Category::find($request->id)->update([
-            'name' => $request->name
-        ]);
+        resolve(CategoryRepository::class)->update($request->id, $request->name);
 
         return \response()->json([
             'message' => 'category updated successfully'

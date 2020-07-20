@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->loadRoutesFrom(base_path() . '\routes\my_routes.php');
     }
 
     /**

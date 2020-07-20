@@ -34,7 +34,8 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->only(['email', 'password']))) {
             return \response()->json([
-                'message' => 'user logged in successfully'
+                'message' => 'user logged in successfully',
+                'user' => Auth::user()
             ], Response::HTTP_OK);
         }
 

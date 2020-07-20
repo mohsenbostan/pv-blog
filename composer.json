@@ -14,7 +14,8 @@
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
         "laravel/sanctum": "^2.4",
-        "laravel/tinker": "^2.0"
+        "laravel/tinker": "^2.0",
+        "rennokki/laravel-eloquent-query-cache": "^2.1"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -34,6 +35,9 @@
         }
     },
     "autoload": {
+        "files": [
+            "app/helpers.php"
+        ],
         "psr-4": {
             "App\\": "app/"
         },

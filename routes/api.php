@@ -30,7 +30,7 @@ Route::prefix('/categories')->group(function () {
 
 Route::prefix('/articles')->group(function () {
     Route::get('/', 'API\ArticleController@index')->name('article.all');
-    Route::get('/{article_id}/show', 'API\ArticleController@show')->name('article.show');
+    Route::get('/{article_slug}/show', 'API\ArticleController@show')->name('article.show');
     Route::middleware('auth:sanctum')->post('/', 'API\ArticleController@store')->name('article.store');
     Route::middleware('auth:sanctum')->put('/', 'API\ArticleController@update')->name('article.update');
     Route::middleware('auth:sanctum')->delete('/{ids}', 'API\ArticleController@destroy')->name('article.delete');

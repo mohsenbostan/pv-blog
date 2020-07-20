@@ -67,6 +67,7 @@ class CategoryTest extends TestCase
         $category = factory(Category::class)->create([
             'name' => 'Blue'
         ]);
+        
         $response = $this->json('PUT', route('category.update'), [
             'id' => $category->id,
             'name' => 'Red'

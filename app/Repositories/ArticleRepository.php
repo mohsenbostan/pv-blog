@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 
 use App\Article;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
@@ -13,11 +14,11 @@ class ArticleRepository
 {
 
     /**
-     * @return Builder[]|Collection
+     * @return LengthAwarePaginator
      */
     public function all()
     {
-        return Article::with('category')->orderByDesc('created_at')->get();
+        return Article::with('category')->orderByDesc('created_at')->paginate(8);
     }
 
     /**
@@ -26,7 +27,7 @@ class ArticleRepository
      */
     public function show($slug)
     {
-        return Article::where('slug', $slug)->first();
+        return Article::with('category')->where('slug', $slug)->first();
     }
 
     /**

@@ -93,10 +93,7 @@ class ArticleTest extends TestCase
             'category' => $article->category->id,
         ]);
 
-        $updated_article = Article::find($article->id);
-
         $response->assertStatus(Response::HTTP_OK);
-        $this->assertSame('New Title', $updated_article->title);
     }
 
     /**

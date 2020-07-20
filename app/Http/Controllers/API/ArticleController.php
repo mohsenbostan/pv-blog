@@ -29,7 +29,7 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
+            'title' => 'required|unique:articles',
             'description' => 'required',
             'content' => 'required',
             'category' => 'required',

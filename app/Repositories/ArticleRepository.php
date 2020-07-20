@@ -18,7 +18,7 @@ class ArticleRepository
      */
     public function all()
     {
-        return Article::with('category')->orderByDesc('created_at')->paginate(8);
+        return Article::cacheFor(now()->addMinutes(10))->with('category')->orderByDesc('created_at')->paginate(8);
     }
 
     /**

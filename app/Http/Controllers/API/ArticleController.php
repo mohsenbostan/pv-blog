@@ -79,4 +79,28 @@ class ArticleController extends Controller
             'message' => 'article(s) deleted successfully'
         ], Response::HTTP_OK);
     }
+
+    public function saveComment(Request $request, $id)
+    {
+        $request->validate([
+            'content' => 'required',
+        ]);
+
+        resolve(ArticleRepository::class)->saveComment($id, $request);
+
+        return \response()->json([
+            'message' => 'comment added successfully!'
+        ], Response::HTTP_CREATED);
+    }
+
+    public function deleteComment($id)
+    {
+
+        resolve(ArticleRepository::class)->deleteComment($id);
+
+        return \response()->json([
+            'message' => 'comment deleted successfully!'
+        ], Response::HTTP_OK);
+    }
+
 }

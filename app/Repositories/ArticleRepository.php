@@ -5,9 +5,11 @@ namespace App\Repositories;
 
 
 use App\Article;
+use App\Comment;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ArticleRepository
@@ -18,7 +20,7 @@ class ArticleRepository
      */
     public function all()
     {
-        return Article::cacheFor(now()->addMinutes(10))->with('category')->orderByDesc('created_at')->paginate(8);
+        return Article::cacheFor(now()->addMinutes(10))->with(['category', 'comments'])->orderByDesc('created_at')->paginate(8);
     }
 
     /**
@@ -66,5 +68,25 @@ class ArticleRepository
     public function delete($ids): void
     {
         Article::destroy($ids);
+    }
+
+    /**
+     * @param $id
+     * @param Request $request
+     */
+    public function saveComment($id, Request $request): void
+    {
+        Article::query()->find($id)->comments()->create([
+            'content' => $request->input('content'),
+            'user_id' => auth()->user()->id,
+        ]);
+    }
+
+    /**
+     * @param $id
+     */
+    public function deleteComment($id): void
+    {
+        Comment::query()->find($id)->delete();
     }
 }

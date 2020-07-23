@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -39,9 +40,9 @@ class AuthController extends Controller
             ], Response::HTTP_OK);
         }
 
-        return \response()->json([
-            'message' => 'wrong credentials'
-        ], Response::HTTP_EXPECTATION_FAILED);
+        throw ValidationException::withMessages([
+            'email' => 'wrong credentials!'
+        ]);
     }
 
     public function logout()

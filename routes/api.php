@@ -40,6 +40,9 @@ Route::prefix('/articles')->name('article.')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/{id}/saveComment', 'API\ArticleController@saveComment')->name('saveComment');
+
+        Route::put('/{id}/editComment', 'API\ArticleController@updateComment')->name('editComment');
+
         Route::delete('/{id}/deleteComment', 'API\ArticleController@deleteComment')->name('deleteComment');
 
         Route::post('/', 'API\ArticleController@store')->name('store');

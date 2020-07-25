@@ -93,6 +93,19 @@ class ArticleController extends Controller
         ], Response::HTTP_CREATED);
     }
 
+    public function updateComment(Request $request, $id)
+    {
+        $data = $request->validate([
+            'content' => 'required',
+        ]);
+
+        resolve(ArticleRepository::class)->updateComment($id, $data);
+
+        return \response()->json([
+            'message' => 'comment updated successfully!'
+        ], Response::HTTP_OK);
+    }
+
     public function deleteComment($id)
     {
 

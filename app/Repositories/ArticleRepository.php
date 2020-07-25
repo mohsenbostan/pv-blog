@@ -84,6 +84,17 @@ class ArticleRepository
 
     /**
      * @param $id
+     * @param $data
+     */
+    public function updateComment($id, $data): void
+    {
+        Comment::query()->find($id)->update([
+            'content' => $data['content'],
+        ]);
+    }
+
+    /**
+     * @param $id
      */
     public function deleteComment($id): void
     {
